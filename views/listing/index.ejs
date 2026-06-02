@@ -1,14 +1,81 @@
 <% layout("./layouts/boilerplate")%>
-<body>
-    <!-- <form method="get" action="/listing/new">
-        <button>New Listing</button>
-    </form> -->
-    <h1>All Listings</h1>
-    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1  row-cols-1">
+<style>
+  #filters {
+    display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  }
+
+  .filter {
+   text-align: center;
+   margin-top: 2rem;
+   margin-right: 2rem;
+   opacity: 0.7;
+  }
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter p{
+    font-size: 0.8rem;
+  }
+  .tax-toggle{
+    margin-left: 3rem;
+    display: flex;
+    align-items: center;
+  }
+</style>
+<div id="filters">
+  <div class="filter">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </div>
+   <div class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-city"></i></div>
+    <p>Iconic cities</p>
+  </div>
+   <div class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Amazing views</p>
+  </div>
+  
+   <div class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Beach</p>
+  </div>
+
+   <div class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Amazing pools</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-mountain"></i></div>
+    <p>Mountains</p>
+  </div>
+   <div class="filter">
+    <div><i class="fa-brands fa-fort-awesome"></i></div>
+    <p>Castles</p>
+  </div>
+   <div class="filter">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>Camping</p>
+  </div>
+  <div class="tax-toggle">
+    <div class="form-check form-switch form-check-reverse">
+  <input class="form-check-input" type="checkbox" id="switchCheckReverse">
+  <label class="form-check-label" for="switchCheckReverse">Display total after taxes</label>
+</div>
+  </div>
+</div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1  row-cols-1 mt-3">
     <% for(let list of lists){%>
       <a  class="listing-link" href="/listing/<%=list._id%>">
     <div class="card col listing-card">
-  <img src="<%= list.image%>" class="card-img-top" alt="listing" style="height: 20rem;">
+  <img src="<%= list.image.url%>" class="card-img-top" alt="listing" style="height: 20rem;">
   <div class="card-img-overlay"></div>
   <div class="card-body">
     <p class="card-text"><b><%=list.title%></b></p>
@@ -18,4 +85,22 @@
 </a>
 <%}%>
     </div>
-</body>
+<script>
+  let taxSwitch = document.getElementById("switchCheckReverse");
+  taxSwitch.addEventListener("change", function () {
+    let prices = document.querySelectorAll(".card-text:nth-child(2)");
+    if (this.checked) {
+      prices.forEach((price) => {
+        let priceValue = parseFloat(price.textContent.replace(/[^0-9.-]+/g, ""));
+        let totalPrice = priceValue * 1.15; 
+        price.textContent = `₨ ${totalPrice.toLocaleString("en-PK")} /Per Night (incl. taxes)`;
+      });
+    } else {
+      prices.forEach((price) => {
+        let priceValue = parseFloat(price.textContent.replace(/[^0-9.-]+/g, ""));
+        let originalPrice = priceValue / 1.15;
+        price.textContent = `₨ ${originalPrice.toLocaleString("en-PK")} /Per Night`;
+      });
+    }
+  });
+</script>
