@@ -111,3 +111,79 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+/* wrapper */
+.marker-wrapper {
+  position: relative;
+}
+
+/* POPUP */
+.popup {
+  position: absolute;
+  bottom: 75px;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  background: white;
+  padding: 10px;
+  border-radius: 10px;
+  width: 200px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: 0.2s;
+  text-align: center;
+}
+
+/* popup arrow */
+.popup::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}
+
+/* show on hover */
+.marker-wrapper:hover .popup {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* BIG RED MARKER */
+.custom-marker {
+  width: 40px;
+  height: 40px;
+  background: #ff385c;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* WHITE ICON */
+.custom-marker i {
+  color: white;
+  font-size: 16px;
+}
+
+/* LIGHT PINK RADIUS */
+.custom-marker::after {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 56, 92, 0.25);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+/* IMPORTANT: prevent clipping */
+gmp-advanced-marker {
+  overflow: visible !important;
+}
