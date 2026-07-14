@@ -19,10 +19,10 @@ app.engine("ejs", ejsmate);
 const expressError=require("./utils/expressError.js")
 
 async function main() {
-    await mongoose.connect("mongodb://127.0.0.1:27017/GlobeStay")
+    await mongoose.connect(process.env.MONGODB_URI)
 }
 main().then((res) => {
-    console.log("database connect sucessful")
+    console.log("Database connected successfully")
 })
     .catch((err) => {
         console.log(err);
